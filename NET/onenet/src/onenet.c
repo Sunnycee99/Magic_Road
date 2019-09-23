@@ -2,70 +2,70 @@
 	************************************************************
 	************************************************************
 	************************************************************
-	*	ÎÄ¼şÃû£º 	onenet.c
+	*	æ–‡ä»¶åï¼š 	onenet.c
 	*
-	*	×÷Õß£º 		ÕÅ¼ÌÈğ
+	*	ä½œè€…ï¼š 		å¼ ç»§ç‘
 	*
-	*	ÈÕÆÚ£º 		2017-05-08
+	*	æ—¥æœŸï¼š 		2017-05-08
 	*
-	*	°æ±¾£º 		V1.1
+	*	ç‰ˆæœ¬ï¼š 		V1.1
 	*
-	*	ËµÃ÷£º 		ÓëonenetÆ½Ì¨µÄÊı¾İ½»»¥½Ó¿Ú²ã
+	*	è¯´æ˜ï¼š 		ä¸onenetå¹³å°çš„æ•°æ®äº¤äº’æ¥å£å±‚
 	*
-	*	ĞŞ¸Ä¼ÇÂ¼£º	V1.0£ºĞ­Òé·â×°¡¢·µ»ØÅĞ¶Ï¶¼ÔÚÍ¬Ò»¸öÎÄ¼ş£¬²¢ÇÒ²»Í¬Ğ­Òé½Ó¿Ú²»Í¬¡£
-	*				V1.1£ºÌá¹©Í³Ò»½Ó¿Ú¹©Ó¦ÓÃ²ãÊ¹ÓÃ£¬¸ù¾İ²»Í¬Ğ­ÒéÎÄ¼şÀ´·â×°Ğ­ÒéÏà¹ØµÄÄÚÈİ¡£
+	*	ä¿®æ”¹è®°å½•ï¼š	V1.0ï¼šåè®®å°è£…ã€è¿”å›åˆ¤æ–­éƒ½åœ¨åŒä¸€ä¸ªæ–‡ä»¶ï¼Œå¹¶ä¸”ä¸åŒåè®®æ¥å£ä¸åŒã€‚
+	*				V1.1ï¼šæä¾›ç»Ÿä¸€æ¥å£ä¾›åº”ç”¨å±‚ä½¿ç”¨ï¼Œæ ¹æ®ä¸åŒåè®®æ–‡ä»¶æ¥å°è£…åè®®ç›¸å…³çš„å†…å®¹ã€‚
 	************************************************************
 	************************************************************
 	************************************************************
 **/
 
-//µ¥Æ¬»úÍ·ÎÄ¼ş
+//å•ç‰‡æœºå¤´æ–‡ä»¶
 #include "stm32f10x.h"
 
-//ÍøÂçÉè±¸
+//ç½‘ç»œè®¾å¤‡
 #include "esp8266.h"
 
-//Ğ­ÒéÎÄ¼ş
+//åè®®æ–‡ä»¶
 #include "onenet.h"
 #include "mqttkit.h"
 
-//Ó²¼şÇı¶¯
+//ç¡¬ä»¶é©±åŠ¨
 #include "usart.h"
 #include "delay.h"
 #include "led.h"
 
-//C¿â
+//Cåº“
 #include <string.h>
 #include <stdio.h>
 
-//×´Ì¬ÎÄ¼ş
+//çŠ¶æ€æ–‡ä»¶
 #include "status.h"
 
-#define PROID		"264064"
+#define PROID		"Your_Product_Id"
 
-#define AUTH_INFO	"SWUST"
+#define AUTH_INFO	"Your_Auth_INFO"
 
-#define DEVID		"537485585"
+#define DEVID		"Your_Device_Id"
 
 
 extern unsigned char esp8266_buf[128];
 
 
 //==========================================================
-//	º¯ÊıÃû³Æ£º	OneNet_DevLink
+//	å‡½æ•°åç§°ï¼š	OneNet_DevLink
 //
-//	º¯Êı¹¦ÄÜ£º	Óëonenet´´½¨Á¬½Ó
+//	å‡½æ•°åŠŸèƒ½ï¼š	ä¸onenetåˆ›å»ºè¿æ¥
 //
-//	Èë¿Ú²ÎÊı£º	ÎŞ
+//	å…¥å£å‚æ•°ï¼š	æ— 
 //
-//	·µ»Ø²ÎÊı£º	1-³É¹¦	0-Ê§°Ü
+//	è¿”å›å‚æ•°ï¼š	1-æˆåŠŸ	0-å¤±è´¥
 //
-//	ËµÃ÷£º		ÓëonenetÆ½Ì¨½¨Á¢Á¬½Ó
+//	è¯´æ˜ï¼š		ä¸onenetå¹³å°å»ºç«‹è¿æ¥
 //==========================================================
 _Bool OneNet_DevLink(void)
 {
 	
-	MQTT_PACKET_STRUCTURE mqttPacket = {NULL, 0, 0, 0};					//Ğ­Òé°ü
+	MQTT_PACKET_STRUCTURE mqttPacket = {NULL, 0, 0, 0};					//åè®®åŒ…
 
 	unsigned char *dataPtr;
 	
@@ -77,29 +77,29 @@ _Bool OneNet_DevLink(void)
 	
 	if(MQTT_PacketConnect(PROID, AUTH_INFO, DEVID, 256, 0, MQTT_QOS_LEVEL0, NULL, NULL, 0, &mqttPacket) == 0)
 	{
-		ESP8266_SendData(mqttPacket._data, mqttPacket._len);			//ÉÏ´«Æ½Ì¨
+		ESP8266_SendData(mqttPacket._data, mqttPacket._len);			//ä¸Šä¼ å¹³å°
 		
-		dataPtr = ESP8266_GetIPD(250);									//µÈ´ıÆ½Ì¨ÏìÓ¦
+		dataPtr = ESP8266_GetIPD(250);									//ç­‰å¾…å¹³å°å“åº”
 		if(dataPtr != NULL)
 		{
 			if(MQTT_UnPacketRecv(dataPtr) == MQTT_PKT_CONNACK)
 			{
 				switch(MQTT_UnPacketConnectAck(dataPtr))
 				{
-					case 0:UsartPrintf(USART_DEBUG, "Tips:	Á¬½Ó³É¹¦\r\n");status = 0;break;
+					case 0:UsartPrintf(USART_DEBUG, "Tips:	è¿æ¥æˆåŠŸ\r\n");status = 0;break;
 					
-					case 1:UsartPrintf(USART_DEBUG, "WARN:	Á¬½ÓÊ§°Ü£ºĞ­Òé´íÎó\r\n");break;
-					case 2:UsartPrintf(USART_DEBUG, "WARN:	Á¬½ÓÊ§°Ü£º·Ç·¨µÄclientid\r\n");break;
-					case 3:UsartPrintf(USART_DEBUG, "WARN:	Á¬½ÓÊ§°Ü£º·şÎñÆ÷Ê§°Ü\r\n");break;
-					case 4:UsartPrintf(USART_DEBUG, "WARN:	Á¬½ÓÊ§°Ü£ºÓÃ»§Ãû»òÃÜÂë´íÎó\r\n");break;
-					case 5:UsartPrintf(USART_DEBUG, "WARN:	Á¬½ÓÊ§°Ü£º·Ç·¨Á´½Ó(±ÈÈçtoken·Ç·¨)\r\n");break;
+					case 1:UsartPrintf(USART_DEBUG, "WARN:	è¿æ¥å¤±è´¥ï¼šåè®®é”™è¯¯\r\n");break;
+					case 2:UsartPrintf(USART_DEBUG, "WARN:	è¿æ¥å¤±è´¥ï¼šéæ³•çš„clientid\r\n");break;
+					case 3:UsartPrintf(USART_DEBUG, "WARN:	è¿æ¥å¤±è´¥ï¼šæœåŠ¡å™¨å¤±è´¥\r\n");break;
+					case 4:UsartPrintf(USART_DEBUG, "WARN:	è¿æ¥å¤±è´¥ï¼šç”¨æˆ·åæˆ–å¯†ç é”™è¯¯\r\n");break;
+					case 5:UsartPrintf(USART_DEBUG, "WARN:	è¿æ¥å¤±è´¥ï¼šéæ³•é“¾æ¥(æ¯”å¦‚tokenéæ³•)\r\n");break;
 					
-					default:UsartPrintf(USART_DEBUG, "ERR:	Á¬½ÓÊ§°Ü£ºÎ´Öª´íÎó\r\n");break;
+					default:UsartPrintf(USART_DEBUG, "ERR:	è¿æ¥å¤±è´¥ï¼šæœªçŸ¥é”™è¯¯\r\n");break;
 				}
 			}
 		}
 		
-		MQTT_DeleteBuffer(&mqttPacket);								//É¾°ü
+		MQTT_DeleteBuffer(&mqttPacket);								//åˆ åŒ…
 	}
 	else
 		UsartPrintf(USART_DEBUG, "WARN:	MQTT_PacketConnect Failed\r\n");
@@ -153,20 +153,20 @@ unsigned char OneNet_FillBuf(char *buf)
 }
 
 //==========================================================
-//	º¯ÊıÃû³Æ£º	OneNet_SendData
+//	å‡½æ•°åç§°ï¼š	OneNet_SendData
 //
-//	º¯Êı¹¦ÄÜ£º	ÉÏ´«Êı¾İµ½Æ½Ì¨
+//	å‡½æ•°åŠŸèƒ½ï¼š	ä¸Šä¼ æ•°æ®åˆ°å¹³å°
 //
-//	Èë¿Ú²ÎÊı£º	type£º·¢ËÍÊı¾İµÄ¸ñÊ½
+//	å…¥å£å‚æ•°ï¼š	typeï¼šå‘é€æ•°æ®çš„æ ¼å¼
 //
-//	·µ»Ø²ÎÊı£º	ÎŞ
+//	è¿”å›å‚æ•°ï¼š	æ— 
 //
-//	ËµÃ÷£º		
+//	è¯´æ˜ï¼š		
 //==========================================================
 void OneNet_SendData(void)
 {
 	
-	MQTT_PACKET_STRUCTURE mqttPacket = {NULL, 0, 0, 0};												//Ğ­Òé°ü
+	MQTT_PACKET_STRUCTURE mqttPacket = {NULL, 0, 0, 0};												//åè®®åŒ…
 	
 	char buf[128];
 	
@@ -176,19 +176,19 @@ void OneNet_SendData(void)
 	
 	memset(buf, 0, sizeof(buf));
 	
-	body_len = OneNet_FillBuf(buf);																//»ñÈ¡µ±Ç°ĞèÒª·¢ËÍµÄÊı¾İÁ÷µÄ×Ü³¤¶È
+	body_len = OneNet_FillBuf(buf);																//è·å–å½“å‰éœ€è¦å‘é€çš„æ•°æ®æµçš„æ€»é•¿åº¦
 	
 	if(body_len)
 	{
-		if(MQTT_PacketSaveData(DEVID, body_len, NULL, 5, &mqttPacket) == 0)							//·â°ü
+		if(MQTT_PacketSaveData(DEVID, body_len, NULL, 5, &mqttPacket) == 0)							//å°åŒ…
 		{
 			for(; i < body_len; i++)
 				mqttPacket._data[mqttPacket._len++] = buf[i];
 			
-			ESP8266_SendData(mqttPacket._data, mqttPacket._len);									//ÉÏ´«Êı¾İµ½Æ½Ì¨
+			ESP8266_SendData(mqttPacket._data, mqttPacket._len);									//ä¸Šä¼ æ•°æ®åˆ°å¹³å°
 			UsartPrintf(USART_DEBUG, "Send %d Bytes\r\n", mqttPacket._len);
 			
-			MQTT_DeleteBuffer(&mqttPacket);															//É¾°ü
+			MQTT_DeleteBuffer(&mqttPacket);															//åˆ åŒ…
 		}
 		else
 			UsartPrintf(USART_DEBUG, "WARN:	EDP_NewBuffer Failed\r\n");
@@ -196,20 +196,20 @@ void OneNet_SendData(void)
 }
 
 //==========================================================
-//	º¯ÊıÃû³Æ£º	OneNet_RevPro
+//	å‡½æ•°åç§°ï¼š	OneNet_RevPro
 //
-//	º¯Êı¹¦ÄÜ£º	Æ½Ì¨·µ»ØÊı¾İ¼ì²â
+//	å‡½æ•°åŠŸèƒ½ï¼š	å¹³å°è¿”å›æ•°æ®æ£€æµ‹
 //
-//	Èë¿Ú²ÎÊı£º	dataPtr£ºÆ½Ì¨·µ»ØµÄÊı¾İ
+//	å…¥å£å‚æ•°ï¼š	dataPtrï¼šå¹³å°è¿”å›çš„æ•°æ®
 //
-//	·µ»Ø²ÎÊı£º	ÎŞ
+//	è¿”å›å‚æ•°ï¼š	æ— 
 //
-//	ËµÃ÷£º		
+//	è¯´æ˜ï¼š		
 //==========================================================
 void OneNet_RevPro(unsigned char *cmd)
 {
 	
-	MQTT_PACKET_STRUCTURE mqttPacket = {NULL, 0, 0, 0};								//Ğ­Òé°ü
+	MQTT_PACKET_STRUCTURE mqttPacket = {NULL, 0, 0, 0};								//åè®®åŒ…
 	
 	char *req_payload = NULL;
 	char *cmdid_topic = NULL;
@@ -227,19 +227,19 @@ void OneNet_RevPro(unsigned char *cmd)
 	type = MQTT_UnPacketRecv(cmd);
 	switch(type)
 	{
-		case MQTT_PKT_CMD:															//ÃüÁîÏÂ·¢
+		case MQTT_PKT_CMD:															//å‘½ä»¤ä¸‹å‘
 			
-			result = MQTT_UnPacketCmd(cmd, &cmdid_topic, &req_payload, &req_len);	//½â³ötopicºÍÏûÏ¢Ìå
+			result = MQTT_UnPacketCmd(cmd, &cmdid_topic, &req_payload, &req_len);	//è§£å‡ºtopicå’Œæ¶ˆæ¯ä½“
 			if(result == 0)
 			{
 				UsartPrintf(USART_DEBUG, "cmdid: %s, req: %s, req_len: %d\r\n", cmdid_topic, req_payload, req_len);
 				
-				if(MQTT_PacketCmdResp(cmdid_topic, req_payload, &mqttPacket) == 0)	//ÃüÁî»Ø¸´×é°ü
+				if(MQTT_PacketCmdResp(cmdid_topic, req_payload, &mqttPacket) == 0)	//å‘½ä»¤å›å¤ç»„åŒ…
 				{
 					UsartPrintf(USART_DEBUG, "Tips:	Send CmdResp\r\n");
 					
-					ESP8266_SendData(mqttPacket._data, mqttPacket._len);			//»Ø¸´ÃüÁî
-					MQTT_DeleteBuffer(&mqttPacket);									//É¾°ü
+					ESP8266_SendData(mqttPacket._data, mqttPacket._len);			//å›å¤å‘½ä»¤
+					MQTT_DeleteBuffer(&mqttPacket);									//åˆ åŒ…
 				}
 //				if(strcmp("011", req_payload)==0)
 //				{
@@ -253,16 +253,16 @@ void OneNet_RevPro(unsigned char *cmd)
 //				}
 				if(req_payload[0]=='0')
 				{
-					//ÅĞ¶Ï¿ØÖÆµÄÉè±¸
+					//åˆ¤æ–­æ§åˆ¶çš„è®¾å¤‡
 					switch(req_payload[1])
 					{
 						case '1':if(req_payload[2]=='1'){LED1_1_ON;All_Status.light1_1 = 1;} if(req_payload[2]=='0'){LED1_1_OFF;All_Status.light1_1 = 1;} break;
 						case '2':if(req_payload[2]=='1'){LED1_2_ON;All_Status.light1_2 = 1;} if(req_payload[2]=='0'){LED1_2_OFF;All_Status.light1_2 = 1;} break;
 						case '3':if(req_payload[2]=='1'){LED1_3_ON;All_Status.light1_3 = 1;} if(req_payload[2]=='0'){LED1_3_OFF;All_Status.light1_3 = 1;} break;
 						case '4':if(req_payload[2]=='1'){WATER1_ON;All_Status.water1 = 1;} if(req_payload[2]=='0'){WATER1_OFF;All_Status.water1 = 1;} break;
-						//»Øµ½×ÔÊÊÓ¦
+						//å›åˆ°è‡ªé€‚åº”
 						case '5':All_Status.light1_1=0;All_Status.light1_2=0;All_Status.light1_3=0;All_Status.water1=0;break;
-						//ÉîÒ¹Ä£Ê½
+						//æ·±å¤œæ¨¡å¼
 						case '6':if(req_payload[2]=='1'){All_Status.deep_light = 1;} if(req_payload[2]=='0'){All_Status.deep_light = 0;} break;
 					}
 				}
@@ -270,7 +270,7 @@ void OneNet_RevPro(unsigned char *cmd)
 		
 		break;
 			
-		case MQTT_PKT_PUBACK:														//·¢ËÍPublishÏûÏ¢£¬Æ½Ì¨»Ø¸´µÄAck
+		case MQTT_PKT_PUBACK:														//å‘é€Publishæ¶ˆæ¯ï¼Œå¹³å°å›å¤çš„Ack
 		
 			if(MQTT_UnPacketPublishAck(cmd) == 0)
 				UsartPrintf(USART_DEBUG, "Tips:	MQTT Publish Send OK\r\n");
@@ -282,24 +282,24 @@ void OneNet_RevPro(unsigned char *cmd)
 		break;
 	}
 	
-	ESP8266_Clear();									//Çå¿Õ»º´æ
+	ESP8266_Clear();									//æ¸…ç©ºç¼“å­˜
 	
 	if(result == -1)
 		return;
 	
-//	dataPtr = strchr(req_payload, ':');					//ËÑË÷':'
+//	dataPtr = strchr(req_payload, ':');					//æœç´¢':'
 
-//	if(dataPtr != NULL && result != -1)					//Èç¹ûÕÒµ½ÁË
+//	if(dataPtr != NULL && result != -1)					//å¦‚æœæ‰¾åˆ°äº†
 //	{
 //		dataPtr++;
 //		
-//		while(*dataPtr >= '0' && *dataPtr <= '9')		//ÅĞ¶ÏÊÇ·ñÊÇÏÂ·¢µÄÃüÁî¿ØÖÆÊı¾İ
+//		while(*dataPtr >= '0' && *dataPtr <= '9')		//åˆ¤æ–­æ˜¯å¦æ˜¯ä¸‹å‘çš„å‘½ä»¤æ§åˆ¶æ•°æ®
 //		{
 //			numBuf[num++] = *dataPtr++;
 //		}
 //		numBuf[num] = 0;
 //		
-//		num = atoi((const char *)numBuf);				//×ªÎªÊıÖµĞÎÊ½
+//		num = atoi((const char *)numBuf);				//è½¬ä¸ºæ•°å€¼å½¢å¼
 //		
 //		if(strcmp("011", numBuf)!=0)
 //			GPIO_ResetBits(GPIOC, GPIO_Pin_7);
